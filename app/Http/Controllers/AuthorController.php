@@ -64,10 +64,20 @@ class AuthorController extends Controller
      }
 
 
-
-
     /**
      * Remove the specified resource from storage.
      */
+
+
+     public function destroy($id)
+     {
+     $author = Author::find($id);
+     if ($author) {
+     $author->delete();
+     return response()->json(null, 204);
+     } else {
+     return response()->json(['message' => 'Author not found.'], 404);
+     }
+     }
 
 }
