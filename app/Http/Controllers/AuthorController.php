@@ -49,6 +49,22 @@ class AuthorController extends Controller
      * Update the specified resource in storage.
      */
 
+     public function update(StoreAuthorRequest $request, $id)
+     {
+     $author = Author::find($id);
+     if ($author) {
+     $request->validate([
+     'name' => 'required',
+     ]);
+     $author->update($request->all());
+     return response()->json($author);
+     } else {
+     return response()->json(['message' => 'Author not found.'], 404);
+     }
+     }
+
+
+
 
     /**
      * Remove the specified resource from storage.
