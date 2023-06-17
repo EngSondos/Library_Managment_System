@@ -33,6 +33,16 @@ class AuthorController extends Controller
      * Display the specified resource.
      */
 
+     public function show($id)
+     {
+     $author = Author::find($id);
+     if ($author) {
+     return response()->json($author);
+     } else {
+     return response()->json(['message' => 'Author not found.'], 404);
+     }
+     }
+
 
 
     /**
