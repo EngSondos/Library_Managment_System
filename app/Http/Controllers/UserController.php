@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -28,6 +29,12 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        if (!$request->role) {
+            $user->role = 'Viewer';
+        }else{
+
+            $user->role = $request->role;
+        }
         $user->save();
         if ( $request->expectsJson())
         return response()->json($user);
@@ -56,6 +63,7 @@ class UserController extends Controller
         $user=User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->role =$request->role;
         $user->password = bcrypt($request->password);
         $user->save();
 
