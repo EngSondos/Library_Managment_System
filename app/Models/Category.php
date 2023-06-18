@@ -14,8 +14,8 @@ class Category extends Model
     protected $fillable = ['name', 'description'];
 //, 'num_books'
 
-public function books(): HasManyThrough
+public function books(): HasMany
     {
-        return $this->hasManyThrough(Books::class);
+        return $this->hasMany(Books::class);
     }
 }
