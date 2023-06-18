@@ -22,14 +22,14 @@ Route::prefix('books')->group(function(){
 
     Route::get('',[BookApi::class,'index']);
 
-    Route::get('/{id}',[BookApi::class,'destroy']);
+    Route::delete('/{id}',[BookApi::class,'destroy']);
   
-    Route::post('/store',[BookApi::class,'store']);
 
     Route::post('/search',[BookApi::class,'show']);
 
-    Route::post('update/{id}',[BookApi::class,'update']);
+    Route::put('update/{id}',[BookApi::class,'update']);
 });
+Route::post('/store',[BookApi::class,'store']);
 
    
 

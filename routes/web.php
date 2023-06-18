@@ -31,7 +31,7 @@ Route::prefix('books')->group(function(){
 
     Route::get('/create',[BookController::class,'create'])->name('AddBook');
 
-    Route::post('/store',[BookController::class,'store'])->name('StoreBook');
+    // Route::post('/store',[BookController::class,'store'])->name('StoreBook');
 
     Route::post('/search',[BookController::class,'show'])->name('SearchBook');
 

@@ -64,7 +64,7 @@ class BookController extends Controller
         $book->author=$request->author;
         $book->save();
 
-        return redirect()->route('ViewBooks');
+        // return redirect()->route('ViewBooks');
 
 
     }
@@ -76,7 +76,7 @@ class BookController extends Controller
     {
         //
         if(!isset($request->name)){
-            return redirect()->route('ViewBooks');
+            //return redirect()->route('ViewBooks');
         }
         else{
 
@@ -208,7 +208,7 @@ class BookController extends Controller
         $book->author=$request->author;
         $book->save();
 
-        return redirect()->route('ViewBooks');
+        //return redirect()->route('ViewBooks');
 
         
     }

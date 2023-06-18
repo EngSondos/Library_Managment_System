@@ -18,8 +18,8 @@ class BookApi extends Controller
     {
         //
         $books=book::with(['author','category'])->get();
-
-        return json_decode($books);
+        
+        return json_decode($books->sortByDesc('author'));
 
     }
 
@@ -38,11 +38,11 @@ class BookApi extends Controller
          $image->storeAs('public/images',$imageName);
 
         $book=new book();
-        $book->name=$request->name;
+        $book->title=$request->name;
         $book->image=$imageName;
         $book->description=$request->description;
-        $book->category=$request->category;
-        $book->author=$request->author;
+        $book->category_id=$request->category;
+        $book->author_id=$request->author;
         $book->save();
 
         return json_decode($book);
@@ -57,23 +57,29 @@ class BookApi extends Controller
     {
         //
         if(!isset($request->name)){
-
-            $books=book::with(['author','category'])->get();
-
-            return json_decode($books);
+            
+            $books=book::with(['author','category'])           
+            ->get();
+            $books->sortBy(($request->order?:'title'));
+            //order with request body
+            return json_decode($books->sortBy(($request->order?:'title')));
         }
         else{
 
             switch ($request->select) {
+                
 
                 case 'author':
+                    //dd($request->name);
+
                     $query=$request->name;
                     $books = book::query()
-                    ->join('authors', 'books.author', '=', 'authors.id')
+                    ->join('authors', 'books.author_id', '=', 'authors.id')
                     ->where('authors.name', 'LIKE', "%{$query}%")
+                    //->get();
                     ->get(['books.*']);
             
-                    return json_decode($books);
+                    return json_decode($books->sortBy(($request->order?:'title')));
                     
                     break;
 
@@ -85,7 +91,7 @@ class BookApi extends Controller
                     ->where('categories.name', 'LIKE', "%{$query}%")
                     ->get(['books.*']);
             
-                    return json_decode($books);
+                    return json_decode($books->sortBy(($request->order?:'title')));
 
                     break;
                 
@@ -93,7 +99,7 @@ class BookApi extends Controller
 
                 $books=book::where('name','LIKE',"%{$request->name}%")->get();
 
-                  return json_decode($books);
+                  return json_decode($books->sortBy(($request->order?:'title')));
              
                   
                     break;
@@ -107,25 +113,30 @@ class BookApi extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(BookRequest $request, string $id)
+    public function update(string $id, Request $request)
     {
+        
         $book = book::findOrFail($id);
+        $oldBook = new book($request->all());
+        
+        // $filePath = public_path('storage/images/'.$book->image);
+        // if (file_exists($filePath)) {
+        //     unlink($filePath);
+        // }
 
-        $filePath = public_path('storage/images/'.$book->image);
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
-
-        $image= $request->file('image');
-        $imageName=$image->getClientOriginalName();
-         $image->storeAs('public/images',$imageName);
+        // if($request->file('image')){
+            
+        // }
+        // $image= $request->file('image');
+        // $imageName=$image->getClientOriginalName();
+        //  $image->storeAs('public/images',$imageName);
 
      
-        $book->name=$request->name;
-        $book->image=$imageName;
+        $book->title=$request->name;
+        //$book->image=$imageName;
         $book->description=$request->description;
-        $book->category=$request->category;
-        $book->author=$request->author;
+        $book->category_id=$request->category;
+        $book->author_id=$request->author;
         $book->save();
 
         return json_decode($book);
