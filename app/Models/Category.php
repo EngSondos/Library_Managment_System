@@ -14,8 +14,8 @@ class Category extends Model
     protected $fillable = ['name', 'description'];
 //, 'num_books'
 
-public function books(): HasMany
+public function books()
     {
-        return $this->hasMany(Books::class);
+        return $this->hasMany(Book::class);
     }
 }
