@@ -28,5 +28,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     Route::put('/authors/{id}', [AuthorController::class, 'update']);
     Route::delete('/authors/{id}', [AuthorController::class, 'destroy']);
 
-// Route::resource('authors', AuthorController::class);
 
