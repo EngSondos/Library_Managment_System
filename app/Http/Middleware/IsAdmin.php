@@ -16,7 +16,7 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('api')->user()['role']=="super Admin")
+        if(Auth::guard('api')->user()['role']=="Admin")
           return $next($request);
         return response()->json("Not Authorize");
     }
