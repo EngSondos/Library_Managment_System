@@ -32,13 +32,15 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::delete('/{id}', [UserController::class,"destroy"]);
         });
     Route::prefix('authors')->group(function(){
-        Route::get('/', [AuthorController::class, 'index']);
         Route::post('/', [AuthorController::class, 'store']);
         Route::get('//{id}', [AuthorController::class, 'show']);
         Route::put('/{id}', [AuthorController::class, 'update']);
         Route::delete('/{id}', [AuthorController::class, 'destroy']);
         });
 });
+
+Route::get('/authors', [AuthorController::class, 'index']);
+
 
 
 
