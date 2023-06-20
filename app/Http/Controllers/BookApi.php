@@ -87,7 +87,7 @@ class BookApi extends Controller
 
                     $query=$request->name;
                     $books = book::query()
-                    ->join('categories', 'books.category', '=', 'categories.id')
+                    ->join('categories', 'books.category_id', '=', 'categories.id')
                     ->where('categories.name', 'LIKE', "%{$query}%")
                     ->get(['books.*']);
 
@@ -97,7 +97,7 @@ class BookApi extends Controller
 
                 default:
 
-                $books=book::where('name','LIKE',"%{$request->name}%")->get();
+                $books=book::where('title','LIKE',"%{$request->name}%")->get();
 
                   return json_decode($books->sortBy(($request->order?:'title')));
 

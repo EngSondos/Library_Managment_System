@@ -37,35 +37,45 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::middleware('checkRole:super Admin,Admin')->group(function(){
         Route::prefix('authors')->group(function(){
             Route::post('/', [AuthorController::class, 'store']);
-            Route::get('/{id}', [AuthorController::class, 'show']);
             Route::put('/{id}', [AuthorController::class, 'update']);
             Route::delete('/{id}', [AuthorController::class, 'destroy']);
         });
-        Route::Apiresource('category', CategoryController::class)->except('index');
 
+    Route::prefix('books')->group(function(){
+        Route::delete('/{id}',[BookApi::class,'destroy']);
+        Route::put('update/{id}',[BookApi::class,'update']);
+        Route::post('/',[BookApi::class,'store']);
+        });
+        Route::Apiresource('category', CategoryController::class)->except(['index','show']);
     });
 });
+Route::prefix('authors')->group(function(){
+    Route::get('', [AuthorController::class, 'index']);
+    Route::get('/{id}', [AuthorController::class, 'show']);
+});
 
-Route::get('/authors', [AuthorController::class, 'index']);
-Route::get('/category', [CategoryController::class, 'index']);
-
-
-
-
-
-
-
-
+Route::prefix('category')->group(function(){
+    Route::get('', [AuthorController::class, 'index']);
+    Route::get('/{id}', [AuthorController::class, 'show']);
+});
 
 
 Route::prefix('books')->group(function(){
-
-    Route::delete('/{id}',[BookApi::class,'destroy']);
-    Route::put('/{id}',[BookApi::class,'update']);
-    Route::post('/',[BookApi::class,'store']);
-
+    Route::post('/search',[BookApi::class,'show']);
+    Route::get('',[BookApi::class,'index']);
 });
-Route::get('books',[BookApi::class,'index']);
-Route::post('/search',[BookApi::class,'show']);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
