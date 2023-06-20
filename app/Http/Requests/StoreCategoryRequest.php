@@ -36,8 +36,7 @@ class StoreCategoryRequest extends FormRequest
             'data' => [],
             'message' => 'Validation Error',
             'errors' => $validator->messages()->all(),
-        ], ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
-
+        ],ResponseAlias::HTTP_UNPROCESSABLE_ENTITY);
         throw new ValidationException($validator, $response);
     }
 }

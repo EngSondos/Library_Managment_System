@@ -25,22 +25,27 @@ use App\Http\Controllers\CategoryController;
 Route::post('/login',[AuthController::class,'login']);
 
 Route::middleware('auth:sanctum')->group(function(){
-    Route::middleware('isSuper')->prefix('users')->group(function(){
+    Route::middleware('checkRole:super Admin')->prefix('users')->group(function(){
         Route::get('/', [UserController::class,"index"]);
         Route::get('/{id}', [UserController::class,"show"]);
         Route::post('/', [UserController::class,"store"]);
         Route::put('/{id}', [UserController::class,"update"]);
         Route::delete('/{id}', [UserController::class,"destroy"]);
         });
-    Route::prefix('authors')->group(function(){
-        Route::post('/', [AuthorController::class, 'store']);
-        Route::get('//{id}', [AuthorController::class, 'show']);
-        Route::put('/{id}', [AuthorController::class, 'update']);
-        Route::delete('/{id}', [AuthorController::class, 'destroy']);
+    Route::middleware('checkRole:super Admin,Admin')->group(function(){
+        Route::prefix('authors')->group(function(){
+            Route::post('/', [AuthorController::class, 'store']);
+            Route::get('/{id}', [AuthorController::class, 'show']);
+            Route::put('/{id}', [AuthorController::class, 'update']);
+            Route::delete('/{id}', [AuthorController::class, 'destroy']);
         });
+        Route::Apiresource('category', CategoryController::class)->except('index');
+
+    });
 });
 
 Route::get('/authors', [AuthorController::class, 'index']);
+Route::get('/category', [CategoryController::class, 'index']);
 
 
 
@@ -49,5 +54,5 @@ Route::get('/authors', [AuthorController::class, 'index']);
 
 
 
-Route::Apiresource('category', CategoryController::class);
+
 
