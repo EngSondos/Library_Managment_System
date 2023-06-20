@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -54,5 +56,16 @@ Route::get('/category', [CategoryController::class, 'index']);
 
 
 
+
+
+Route::prefix('books')->group(function(){
+
+    Route::delete('/{id}',[BookApi::class,'destroy']);
+    Route::put('/{id}',[BookApi::class,'update']);
+    Route::post('/',[BookApi::class,'store']);
+
+});
+Route::get('books',[BookApi::class,'index']);
+Route::post('/search',[BookApi::class,'show']);
 
 
