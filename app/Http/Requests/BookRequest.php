@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Spatie\FlareClient\Api;
 
 class BookRequest extends FormRequest
 {
@@ -26,6 +27,8 @@ class BookRequest extends FormRequest
             'name'=>'required|max:150',
             'description'=>'required|max:250',
             'image'=>'required|max:50',
+            'category'=>'required|numeric|exists:categories,id',
+            'author'=>'required|numeric|exists:authors,id'
         ];
     }
 }

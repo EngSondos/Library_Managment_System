@@ -55,19 +55,20 @@ class BookApi extends Controller
      */
     public function show(Request $request)
     {
+        $order = ["category"=>"category.name", "author"=>"author.name", "title"=>"title"];
         //
+       
         if(!isset($request->name)){
 
             $books=book::with(['author','category'])
             ->get();
             $books->sortBy(($request->order?:'title'));
             //order with request body
-            return json_decode($books->sortBy(($request->order?:'title')));
+            return json_decode($books->sortBy(($order[$request->order]?:'title')));
         }
         else{
 
             switch ($request->select) {
-
 
                 case 'author':
                     //dd($request->name);
@@ -79,7 +80,7 @@ class BookApi extends Controller
                     //->get();
                     ->get(['books.*']);
 
-                    return json_decode($books->sortBy(($request->order?:'title')));
+                    return json_decode($books->sortBy(($order['$request->order']?:'title')));
 
                     break;
 
@@ -91,7 +92,7 @@ class BookApi extends Controller
                     ->where('categories.name', 'LIKE', "%{$query}%")
                     ->get(['books.*']);
 
-                    return json_decode($books->sortBy(($request->order?:'title')));
+                    return json_decode($books->sortBy(($order['$request->order']?:'title')));
 
                     break;
 
@@ -99,7 +100,7 @@ class BookApi extends Controller
 
                 $books=book::where('title','LIKE',"%{$request->name}%")->get();
 
-                  return json_decode($books->sortBy(($request->order?:'title')));
+                  return json_decode($books->sortBy(($order['$request->order']?:'title')));
 
 
                     break;

@@ -40,23 +40,20 @@ Route::middleware('auth:sanctum')->group(function(){
             Route::put('/{id}', [AuthorController::class, 'update']);
             Route::delete('/{id}', [AuthorController::class, 'destroy']);
         });
+      
 
-    Route::prefix('books')->group(function(){
-        Route::delete('/{id}',[BookApi::class,'destroy']);
-        Route::put('update/{id}',[BookApi::class,'update']);
-        Route::post('/',[BookApi::class,'store']);
-        });
         Route::Apiresource('category', CategoryController::class)->except(['index','show']);
     });
 });
+
 Route::prefix('authors')->group(function(){
     Route::get('', [AuthorController::class, 'index']);
     Route::get('/{id}', [AuthorController::class, 'show']);
 });
 
 Route::prefix('category')->group(function(){
-    Route::get('', [AuthorController::class, 'index']);
-    Route::get('/{id}', [AuthorController::class, 'show']);
+    Route::get('', [CategoryController::class, 'index']);
+    Route::get('/{id}', [CategoryController::class, 'show']);
 });
 
 
@@ -65,7 +62,11 @@ Route::prefix('books')->group(function(){
     Route::get('',[BookApi::class,'index']);
 });
 
-
+Route::prefix('books')->group(function(){
+    Route::delete('/{id}',[BookApi::class,'destroy']);
+    Route::put('update/{id}',[BookApi::class,'update']);
+    Route::post('/',[BookApi::class,'store']);
+    });
 
 
 
