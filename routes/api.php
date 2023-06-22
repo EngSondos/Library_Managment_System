@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->group(function(){
             Route::put('/{id}', [AuthorController::class, 'update']);
             Route::delete('/{id}', [AuthorController::class, 'destroy']);
         });
-      
+
 
         Route::Apiresource('category', CategoryController::class)->except(['index','show']);
     });
@@ -62,11 +62,11 @@ Route::prefix('books')->group(function(){
     Route::get('',[BookApi::class,'index']);
 });
 
-Route::prefix('books')->group(function(){
-    Route::delete('/{id}',[BookApi::class,'destroy']);
-    Route::put('update/{id}',[BookApi::class,'update']);
-    Route::post('/',[BookApi::class,'store']);
-    });
+// Route::prefix('books')->group(function(){
+//     Route::delete('/{id}',[BookApi::class,'destroy']);
+//     Route::put('update/{id}',[BookApi::class,'update']);
+//     Route::post('/',[BookApi::class,'store']);
+//     });
 
 
 
