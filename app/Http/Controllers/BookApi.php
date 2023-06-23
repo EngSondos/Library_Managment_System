@@ -55,7 +55,7 @@ class BookApi extends Controller
      */
     public function show(Request $request)
     {
-        $order = ["category"=>"category.name", "author"=>"author.name", "title"=>"title"];
+        $order = ["category"=>"category.name", "author"=>"author.name", "title"=>"title", ""=>"title"];
         //
 
         if(!isset($request->name)){
